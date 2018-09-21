@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NetCoreOAuth2AuthorizationServer
+namespace NetCoreOAuth2WebApi
 {
     public class Startup
     {
@@ -20,13 +23,18 @@ namespace NetCoreOAuth2AuthorizationServer
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // Configuracion del servidor de identidad, habilita el middleware de Identity Server 4 con
-            // un mantenimiento InMemory
-            // Esto se podria cambiar por algo en bd
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(AuthServerConfig.GetApiResources())
-                .AddInMemoryClients(AuthServerConfig.GetClients());
+            // Configuracion del cliente de identidad, habilita la validacion de token
+            services.AddAuthentication(o =>
+            {
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = AuthServerConfig.AUTH_SERVER_URL;
+                o.RequireHttpsMetadata = false;
+                o.Audience = AuthServerConfig.AUTH_SERVER_URL + "/resources";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,8 +45,10 @@ namespace NetCoreOAuth2AuthorizationServer
                 app.UseDeveloperExceptionPage();
             }
 
-            // Servidor de identidad
-            app.UseIdentityServer();
+            app.UseStatusCodePages();
+
+            // Servidor de identidad para habilitar la validacion de tokens
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

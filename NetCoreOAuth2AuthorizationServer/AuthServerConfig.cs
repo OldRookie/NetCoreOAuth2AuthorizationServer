@@ -1,8 +1,6 @@
-﻿using IdentityServer4.Models;
-using System;
+﻿using IdentityModel;
+using IdentityServer4.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NetCoreOAuth2AuthorizationServer
 {
@@ -33,12 +31,11 @@ namespace NetCoreOAuth2AuthorizationServer
         /// <returns></returns>
         public static IEnumerable<ApiResource> GetApiResources()
         {
-            // ApiResource requiere un nombre del scope (permiso) y un nombre de recurso (objeto)
             var apiResourceList = new List<ApiResource>();
-            apiResourceList.Add(new ApiResource(SCOPE_READ, RESOURCE_NAME)); // Solo lectura
-            apiResourceList.Add(new ApiResource(SCOPE_WRITE, RESOURCE_NAME)); // Solo escritura
-            apiResourceList.Add(new ApiResource(SCOPE_FULL, RESOURCE_NAME)); // Control total
-
+            IEnumerable<string> claims = new List<string> { JwtClaimTypes.Scope, JwtClaimTypes.Audience };
+            apiResourceList.Add(new ApiResource(SCOPE_READ, RESOURCE_NAME, claims));
+            apiResourceList.Add(new ApiResource(SCOPE_WRITE, RESOURCE_NAME, claims));
+            apiResourceList.Add(new ApiResource(SCOPE_FULL, RESOURCE_NAME, claims));
             return apiResourceList;
         }
 
@@ -49,7 +46,7 @@ namespace NetCoreOAuth2AuthorizationServer
         public static IEnumerable<Client> GetClients()
         {
             var clientList = new List<Client>();
-            
+
             // Cliente solo lectura
             clientList.Add(new Client()
             {
@@ -61,7 +58,7 @@ namespace NetCoreOAuth2AuthorizationServer
                 },
                 AllowedScopes = { SCOPE_READ }
             });
-            
+
             // Cliente solo escritura
             clientList.Add(new Client()
             {
@@ -73,7 +70,7 @@ namespace NetCoreOAuth2AuthorizationServer
                 },
                 AllowedScopes = { SCOPE_WRITE }
             });
-            
+
             // Cliente Control total
             clientList.Add(new Client()
             {

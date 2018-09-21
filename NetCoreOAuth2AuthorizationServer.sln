@@ -5,6 +5,16 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreOAuth2AuthorizationServer", "NetCoreOAuth2AuthorizationServer\NetCoreOAuth2AuthorizationServer.csproj", "{898E9DC4-BC70-4362-A87D-8A040BE32771}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreOAuth2WebApi", "NetCoreOAuth2WebApi\NetCoreOAuth2WebApi.csproj", "{804BBFD7-95DA-4767-9860-D62018A0EDDE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{898E9DC4-BC70-4362-A87D-8A040BE32771} = {898E9DC4-BC70-4362-A87D-8A040BE32771}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreOAuth2ConsoleClient", "NetCoreOAuth2ConsoleClient\NetCoreOAuth2ConsoleClient.csproj", "{31A9A876-999B-44EB-8ABF-6CBBB15B2EEC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{804BBFD7-95DA-4767-9860-D62018A0EDDE} = {804BBFD7-95DA-4767-9860-D62018A0EDDE}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +25,14 @@ Global
 		{898E9DC4-BC70-4362-A87D-8A040BE32771}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{898E9DC4-BC70-4362-A87D-8A040BE32771}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{898E9DC4-BC70-4362-A87D-8A040BE32771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{804BBFD7-95DA-4767-9860-D62018A0EDDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804BBFD7-95DA-4767-9860-D62018A0EDDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804BBFD7-95DA-4767-9860-D62018A0EDDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804BBFD7-95DA-4767-9860-D62018A0EDDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A9A876-999B-44EB-8ABF-6CBBB15B2EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A9A876-999B-44EB-8ABF-6CBBB15B2EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A9A876-999B-44EB-8ABF-6CBBB15B2EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A9A876-999B-44EB-8ABF-6CBBB15B2EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
